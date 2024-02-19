@@ -1,7 +1,6 @@
-﻿using BoDi;
-
-namespace ParaBankAts.Hooks
+﻿namespace ParaBankAts.Hooks
 {
+    using BoDi;
     using ParaBankAtf.Pages;
 
     [Binding]

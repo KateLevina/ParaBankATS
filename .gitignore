@@ -7,3 +7,5 @@
 /ParaBankAts/.vs
 /ParaBankAts/bin
 /ParaBankAts/obj
+/ParaBankAts/Features/*.feature.cs
+
