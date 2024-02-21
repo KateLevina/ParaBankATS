@@ -7,13 +7,13 @@ namespace ParaBankAtf.ui.Pages
 {
     public class FindTransactionPage: PageBase
     {
-        //protected string transactionAmountValue = "//input[@ng-model='criteria.amount']";
-        public string FindByAmountBtn = "(//button[@type='submit'])[last()]";
+        private string _transactionsTableRows = "//*[@id='transactionTable']/tbody/tr";
+        private string _findByAmountBtn = "(//button[@type='submit'])[last()]";
         public FindTransactionPage(PageContext context) : base(context) { }
 
         public void ClickFindByAmountBtn()
         {
-            ClickByXPath(FindByAmountBtn);
+            ClickByXPath(_findByAmountBtn);
         }
 
         public void SetAmountValue(string p0)
@@ -34,7 +34,8 @@ namespace ParaBankAtf.ui.Pages
 
         public void CheckTransactionsTableNotEmpty()
         {
-            int rowCount = Context.Driver.FindElements(By.XPath("//*[@id='transactionTable']/tbody/tr")).Count;
+            WaitForVisibility(By.XPath(_transactionsTableRows));
+            int rowCount = GetElementsByXpath(_transactionsTableRows).Count;
             Assert.Greater(rowCount, 0, "Transactions table is empty");
         }
     }
