@@ -5,8 +5,8 @@ namespace ParaBankAtf.ui.Pages
 {
     public class AccountDetailsPage: PageBase
     {
-        private const string AccoutDetailsTitle = "//*[@class='title' and text()='Account Details']";
-        public string FilterOptionAll(string filterType) => $"//select[@id='{filterType}']/option[@selected='selected' and @value='All']";
+        private const string AccoutDetailsTitle = "//h1[@class='title' and text()='Account Details']";
+        public string SelectedFilterOptionAll(string filterType) => $"//select[@id='{filterType}']/option[@selected='selected' and @value='All']";
         public AccountDetailsPage(PageContext context) : base(context) { }
 
         public bool CheckAccountDetailsTitleIsShown()
@@ -36,9 +36,9 @@ namespace ParaBankAtf.ui.Pages
             return valueElement != null;
         }
 
-        public bool CheckFilterValuesAreDefault(string xPath)
+        public bool CheckFilterOptionAndStatus(string expectedOptionXPath)
         {
-            return (GetElement(By.XPath(xPath)) != null);
+            return (GetElement(By.XPath(expectedOptionXPath)) != null);
         }
     }
 }

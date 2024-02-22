@@ -49,8 +49,8 @@ namespace ParaBankAts.StepDefinitions
         [Then(@"Account Activity filter values are set to All")]
         public void ThenAccountActivityFilterValuesAreSetToAll()
         {
-            Assert.IsTrue(_accountDetailsPage.CheckFilterValuesAreDefault(_accountDetailsPage.FilterOptionAll("month")), "Activity Perion filter value is expected to be 'All'");
-            Assert.IsTrue(_accountDetailsPage.CheckFilterValuesAreDefault(_accountDetailsPage.FilterOptionAll("transactionType")), "Type filer value is expected to be 'All'");
+            Assert.IsTrue(_accountDetailsPage.CheckFilterOptionAndStatus(_accountDetailsPage.SelectedFilterOptionAll("month")), "Activity Perion filter value is expected to be 'All'");
+            Assert.IsTrue(_accountDetailsPage.CheckFilterOptionAndStatus(_accountDetailsPage.SelectedFilterOptionAll("transactionType")), "Type filer value is expected to be 'All'");
         }
     }
 }
