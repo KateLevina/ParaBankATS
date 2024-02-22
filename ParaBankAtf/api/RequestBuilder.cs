@@ -329,7 +329,7 @@ namespace ParaBankAtf.api
         /// <returns></returns>
         public IRequestBuilder AddQueryParameter(string name, object value)
         {
-            return this.AddParameter(new QueryParameter(name, value.ToString()));
+            return AddParameter(new QueryParameter(name, value.ToString()));
         }
 
         /// <summary>

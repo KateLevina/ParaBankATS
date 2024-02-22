@@ -1,12 +1,11 @@
-﻿namespace ParaBankAts.Hooks
-{
-    using BoDi;
-    using ParaBankAtf.Pages;
+﻿using BoDi;
+using ParaBankAtf.Pages;
 
+namespace ParaBankAts.Hooks
+{
     [Binding]
     public class ScenarioHooks
     {
-        private const string DefaultPage = "http://localhost:8080/parabank";
         private readonly IObjectContainer objectContainer;
 
         public ScenarioHooks(IObjectContainer objectContainer)
@@ -17,8 +16,7 @@
         [BeforeScenario]
         public void BeforeScenario()
         {
-            this.objectContainer.RegisterInstanceAs(new PageContext(TestRunContext.Driver));
-            TestRunContext.Driver.Navigate().GoToUrl(DefaultPage);
+            objectContainer.RegisterInstanceAs(new PageContext(TestRunContext.Driver));
         }
 
         [AfterScenario]

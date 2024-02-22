@@ -8,12 +8,8 @@
     using System.Collections.ObjectModel;
     using System;
 
-    //COMMON ACTIONS FOR WEBDRIVER
     /// <summary>
     /// Common actions for WebDriver
-    /// This base class contains a useful set of helper methods for scripting Selenium. It should 
-    /// encapsulate the common practices and apply sensible programming practices such as DRY.
-    /// Keep this code clean & refactored.
     /// </summary>
     public class PageBase
     {
@@ -22,7 +18,7 @@
 
         public PageBase(PageContext context)
         {
-            this.Context = context;
+            Context = context;
         }
 
         public string GetCurrentUrl()
@@ -32,7 +28,7 @@
 
         public void Back()
         {
-            this.Context.Driver.Navigate().Back();
+            Context.Driver.Navigate().Back();
         }
 
         public Actions GetBuilder()
@@ -42,12 +38,12 @@
 
         public void NavigateTo(string url)
         {
-            this.Context.Driver.Navigate().GoToUrl(url);
+            Context.Driver.Navigate().GoToUrl(url);
         }
 
         public void RefreshBrowser()
         {
-            this.Context.Driver.Navigate().Refresh();
+            Context.Driver.Navigate().Refresh();
         }
 
         internal void SendKeyPress(string identifierQuery, string searchCriteria)
@@ -58,18 +54,18 @@
 
         public IWebElement WaitForElementByClass(string className)
         {
-            return this.WaitForVisibility(By.ClassName(className));
+            return WaitForVisibility(By.ClassName(className));
         }
 
         public IWebElement WaitForElementByName(string name)
         {
-            return this.WaitForVisibility(By.Name(name));
+            return WaitForVisibility(By.Name(name));
         }
 
         // Get by Text
         public string GetTextById(string id)
         {
-            return this.Context.Driver.FindElement(By.Id(id)).Text;
+            return Context.Driver.FindElement(By.Id(id)).Text;
         }
 
         public string GetTextByClass(string className)
@@ -80,22 +76,22 @@
 
         public string GetTextByCssSelector(string cssSelector)
         {
-            return this.WaitForVisibility(By.CssSelector(cssSelector)).Text;
+            return WaitForVisibility(By.CssSelector(cssSelector)).Text;
         }
 
         public string GetTextByName(string name)
         {
-            return this.WaitForVisibility(By.Name(name)).Text;
+            return WaitForVisibility(By.Name(name)).Text;
         }
 
         public string GetInputValueById(string id)
         {
-            return this.Context.Driver.FindElement(By.Id(id)).GetAttribute("value");
+            return Context.Driver.FindElement(By.Id(id)).GetAttribute("value");
         }
 
         public string GetInputValueByName(string name)
         {
-            return this.Context.Driver.FindElement(By.Name(name)).GetAttribute("value");
+            return Context.Driver.FindElement(By.Name(name)).GetAttribute("value");
         }
 
         public void EnterTextIntoTextBox(By criteria, string text, bool addEnter = false)
@@ -207,6 +203,11 @@
             var element = Context.Driver.FindElement(byCriterion);
             return element.Displayed;
         }
+        public bool ElementIsVisibleByXPath(string xPathString)
+        {
+            var element = Context.Driver.FindElement(By.XPath(xPathString));
+            return element.Displayed;
+        }
 
         public bool IsCheckboxSelected(By checkBox)
         {
@@ -219,7 +220,7 @@
         public void ClickByXPath(string xpathQuery)
         {
             WaitForVisibility(By.XPath(xpathQuery));
-            var element = this.Context.Driver.FindElement(By.XPath(xpathQuery));
+            var element = Context.Driver.FindElement(By.XPath(xpathQuery));
             Assert.IsNotNull(element);
             element.Click();
         }
@@ -227,7 +228,7 @@
         public void ClickByClass(string className)
         {
             WaitForClassToBeVisible(className, 5);
-            this.Context.Driver.FindElements(By.ClassName(className)).First().Click();
+            Context.Driver.FindElements(By.ClassName(className)).First().Click();
         }
 
         public void ClickByTagname(string tagname)
@@ -264,17 +265,17 @@
         public void ClickOnElementOffset(By byCriterion, int offX, int offY)
         {
             WaitForVisibility(byCriterion);
-            var element = this.Context.Driver.FindElement(byCriterion);
+            var element = Context.Driver.FindElement(byCriterion);
             GetBuilder().MoveToElement(element).MoveByOffset(offX, offY).Click().Perform();
         }
 
         public string WindowTitle()
         {
-            return this.Context.Driver.Title;
+            return Context.Driver.Title;
         }
         public void ExecuteScript(string script, params object[] args)
         {
-            ((IJavaScriptExecutor)this.Context.Driver).ExecuteScript(script, args);
+            ((IJavaScriptExecutor)Context.Driver).ExecuteScript(script, args);
         }
 
         #region Protected Helper Methods for derived classes
@@ -287,7 +288,7 @@
         /// <param name="maxWaitSeconds"></param>
         public IWebElement WaitForVisibility(By byCriterion, int maxWaitSeconds = MaxWaitSeconds)
         {
-            var wait = new WebDriverWait(this.Context.Driver, TimeSpan.FromSeconds(maxWaitSeconds));
+            var wait = new WebDriverWait(Context.Driver, TimeSpan.FromSeconds(maxWaitSeconds));
             return wait.Until(ExpectedConditions.ElementIsVisible(byCriterion));
         }
 

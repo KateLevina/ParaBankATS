@@ -8,25 +8,25 @@ namespace ParaBankAts.StepDefinitions
     public class FindTransactionsStepDefinitions
     {
         private FindTransactionPage _findFTransactionPage;
-        MenuPage _menuPage;
+        private MenuPage _menu;
 
-        public FindTransactionsStepDefinitions(MenuPage menuPage, FindTransactionPage findFTransactionPage)
+        public FindTransactionsStepDefinitions(MenuPage menu, FindTransactionPage findFTransactionPage)
         {
-            _menuPage = menuPage;
+            _menu = menu;
             _findFTransactionPage = findFTransactionPage;
         }
 
-        [Given(@"(.*) accounts are created for user - Acc(.*), Acc(.*) and made transactions")]
-        public void GivenAccountsAreCreatedForUser_AccAccAndMadeTransactions(int p0, int p1, int p2, Table table)
+        [Given(@"Accounts are created for user - Acc1, Acc2 and made transactions")]
+        public void GivenAccountsAreCreatedForUser_AccAccAndMadeTransactions()
         {
             var api = new AccountApi();
             api.PerpareFindTransactionsData();
         }
 
-        [When(@"Acc(.*) is selected in Account combobox")]
-        public void WhenAccIsSelectedInAccountCombobox(string p0)
+        [When(@"Last created account is selected in Account combobox")]
+        public void WhenAccIsSelectedInAccountCombobox()
         {
-            _findFTransactionPage.SelectAccount(p0);
+            _findFTransactionPage.SelectAccount();
         }
 
         [When(@"Corresponding Find Transactions Button is clicked")]
@@ -44,8 +44,8 @@ namespace ParaBankAts.StepDefinitions
         [When(@"Amount is specified with (.*)")]
         public void WhenCriteriaIsSpecifiedWith(string p0)
         {
-            _menuPage.Login("john", "demo");
-            _menuPage.OpenFindTransactions();
+            _menu.Login("john", "demo");
+            _menu.OpenFindTransactions();
             _findFTransactionPage.SetAmountValue(p0);
         }
 

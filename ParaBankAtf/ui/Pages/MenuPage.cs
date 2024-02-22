@@ -5,7 +5,7 @@ namespace ParaBankAtf.ui.Pages
 {
     public  class MenuPage: PageBase
     {
-        private const string loginButton = "//input[@class='button' and @type='submit']";
+        private const string LoginButton = "//input[@class='button' and @type='submit' and @value='Log In']";
 
         public MenuPage(PageContext context) : base(context) { }
 
@@ -17,11 +17,11 @@ namespace ParaBankAtf.ui.Pages
         public void Login(string login, string password)
         {
             //if not logged in yet
-            if (ElementExists(By.XPath(loginButton)))
+            if (ElementExists(By.XPath(LoginButton)))
             {
                 EnterTextIntoTextBox(By.Name("username"), login);
                 EnterTextIntoTextBox(By.Name("password"), password);
-                ClickByXPath(loginButton);
+                ClickByXPath(LoginButton);
             }
         }
 

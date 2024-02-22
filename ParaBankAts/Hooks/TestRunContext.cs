@@ -1,10 +1,9 @@
-﻿namespace ParaBankAts.Hooks
-{
-    using NUnit.Framework;
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Chrome;
-    using System;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
+namespace ParaBankAts.Hooks
+{
     public static class BrowserType
     {
         public const int Chrome = 1;
@@ -20,7 +19,7 @@
 
         public static void WindowSetup()
         {
-            Driver.Navigate().GoToUrl("about:blank");
+            Driver.Navigate().GoToUrl("http://localhost:8080/parabank");
             Driver.Manage().Window.Maximize();
         }
 

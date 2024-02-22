@@ -1,14 +1,14 @@
-﻿namespace ParaBankAtf.Pages
-{
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Interactions;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
+namespace ParaBankAtf.Pages
+{
     public class PageContext
     {
         public PageContext(IWebDriver driver)
         {
-            this.Driver = driver;
-            Actions = new Actions(this.Driver);
+            Driver = driver;
+            Actions = new Actions(Driver);
         }
 
         public IWebDriver Driver { get; private set; }

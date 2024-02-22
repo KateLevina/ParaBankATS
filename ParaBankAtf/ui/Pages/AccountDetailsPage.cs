@@ -5,13 +5,13 @@ namespace ParaBankAtf.ui.Pages
 {
     public class AccountDetailsPage: PageBase
     {
-        protected string accoutDetailsTitle = "//*[@class='title' and text()='Account Details']";
+        private const string AccoutDetailsTitle = "//*[@class='title' and text()='Account Details']";
         public string FilterOptionAll(string filterType) => $"//select[@id='{filterType}']/option[@selected='selected' and @value='All']";
         public AccountDetailsPage(PageContext context) : base(context) { }
 
         public bool CheckAccountDetailsTitleIsShown()
         {
-            return (GetElement(By.XPath(accoutDetailsTitle)) != null);
+            return ElementIsVisibleByXPath(AccoutDetailsTitle);
         }
 
         public bool CheckFieldValueIsNotEmpty(string field)
