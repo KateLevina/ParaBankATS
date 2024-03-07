@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using ParaBankAtf.api;
 using ParaBankAtf.ui.Pages;
+using ParaBankAts.Hooks;
 
 namespace ParaBankAts.StepDefinitions
 {
@@ -44,7 +45,7 @@ namespace ParaBankAts.StepDefinitions
         [When(@"Amount is specified with (.*)")]
         public void WhenCriteriaIsSpecifiedWith(string p0)
         {
-            _menu.Login("john", "demo");
+            _menu.Login(TestRunContext.Config["username"], TestRunContext.Config["userPassword"]);
             _menu.OpenFindTransactions();
             _findFTransactionPage.SetAmountValue(p0);
         }

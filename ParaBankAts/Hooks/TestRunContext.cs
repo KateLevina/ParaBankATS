@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Reflection;
 
 namespace ParaBankAts.Hooks
 {
@@ -12,6 +14,16 @@ namespace ParaBankAts.Hooks
     [TestFixture]
     public static class TestRunContext
     {
+        public static IConfigurationRoot Config { get; private set; }
+
+        static TestRunContext()
+        {
+            Config = new ConfigurationBuilder()
+                   .AddJsonFile("appsettings.json")
+                   .AddUserSecrets(Assembly.GetExecutingAssembly(), true)
+                   .Build();
+        }
+
         public static void Initialise()
         {
             Initialise(BrowserType.Chrome);
@@ -46,7 +58,10 @@ namespace ParaBankAts.Hooks
 
             options.SetLoggingPreference(LogType.Browser, LogLevel.Info);
             options.AddArgument("no-sandbox");
-
+            if (bool.Parse(Config["isHeadless"]))
+            {
+                options.AddArgument("--headless");
+            }
             Driver = new ChromeDriver(service, options, TimeSpan.FromSeconds(30));
         }
         #endregion //Local Browsers

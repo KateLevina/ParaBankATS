@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using ParaBankAtf.ui.Pages;
+using ParaBankAts.Hooks;
 
 namespace ParaBankAts.StepDefinitions
 {
@@ -9,6 +11,7 @@ namespace ParaBankAts.StepDefinitions
         private AccountsPage _accountsPage;
         private AccountDetailsPage _accountDetailsPage;
         private MenuPage _menu;
+
         public AccountStepDefinitions(MenuPage menu, AccountsPage accountsPage, AccountDetailsPage accountDetailsPage)
         {
             _menu = menu;
@@ -19,7 +22,7 @@ namespace ParaBankAts.StepDefinitions
         [Given(@"user with several accounts is logged in")]
         public void GivenUserWithSeveralAccountsIsLoggedIn()
         {
-            _menu.Login("john", "demo");
+            _menu.Login(TestRunContext.Config["username"], TestRunContext.Config["userPassword"]);
         }
 
         [When(@"User navigates to Account Overview")]
