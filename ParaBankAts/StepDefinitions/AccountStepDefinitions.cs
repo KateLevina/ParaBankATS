@@ -1,44 +1,59 @@
+using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
 using ParaBankAtf.ui.Pages;
+using ParaBankAts.Hooks;
 
 namespace ParaBankAts.StepDefinitions
 {
     [Binding]
     public class AccountStepDefinitions
     {
-        private LoginPage _loginPage;
-        public AccountStepDefinitions(LoginPage loginPage)
+        private AccountsPage _accountsPage;
+        private AccountDetailsPage _accountDetailsPage;
+        private MenuPage _menu;
+
+        public AccountStepDefinitions(MenuPage menu, AccountsPage accountsPage, AccountDetailsPage accountDetailsPage)
         {
-            _loginPage = loginPage;
+            _menu = menu;
+            _accountsPage = accountsPage;
+            _accountDetailsPage = accountDetailsPage;
         }
 
         [Given(@"user with several accounts is logged in")]
         public void GivenUserWithSeveralAccountsIsLoggedIn()
         {
-            _loginPage.Login("kate", "qwerty");
+            _menu.Login(TestRunContext.Config["username"], TestRunContext.Config["userPassword"]);
         }
 
         [When(@"User navigates to Account Overview")]
         public void WhenUserNavigatesToAccountOverview()
         {
-            throw new PendingStepException();
-        }
-
-        [When(@"Clicks on Account number link")]
-        public void WhenClicksOnAccountNumberLink()
-        {
-            throw new PendingStepException();
+            _menu.OpenAccountOverview();
         }
 
         [Then(@"details page is displayed")]
         public void ThenDetailsPageIsDisplayed()
         {
-            throw new PendingStepException();
+            Assert.IsTrue(_accountDetailsPage.CheckAccountDetailsTitleIsShown(), "Account Details title is to be shown but it was not found");
         }
 
         [Then(@"(.*) value is not empty")]
         public void ThenAvailableValueIsNotEmpty(string field)
         {
-            throw new PendingStepException();
+            Assert.IsTrue(_accountDetailsPage.CheckFieldValueIsNotEmpty(field), $"The {field} value of Account Details is not shown");
+        }
+
+        [When(@"Clicks on Account number link in the (.*) row of table")]
+        public void WhenClicksOnAccountNumberLinkInTheRowOfTable(int rowNo)
+        {
+            _accountsPage.OpenAccountDetails(rowNo);
+        }
+
+        [Then(@"Account Activity filter values are set to All")]
+        public void ThenAccountActivityFilterValuesAreSetToAll()
+        {
+            Assert.IsTrue(_accountDetailsPage.CheckFilterOptionAndStatus(_accountDetailsPage.SelectedFilterOptionAll("month")), "Activity Perion filter value is expected to be 'All'");
+            Assert.IsTrue(_accountDetailsPage.CheckFilterOptionAndStatus(_accountDetailsPage.SelectedFilterOptionAll("transactionType")), "Type filer value is expected to be 'All'");
         }
     }
 }

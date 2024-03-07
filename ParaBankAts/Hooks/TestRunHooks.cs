@@ -1,7 +1,5 @@
 ﻿namespace ParaBankAts.Hooks
 {
-    using TechTalk.SpecFlow;
-
     [Binding]
     internal static class TestRunHooks
     {
